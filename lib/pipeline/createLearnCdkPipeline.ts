@@ -34,8 +34,9 @@ export default function createLearnCdkPipeline(scope: Construct, id: string, pro
       commands: buildCommands,
     });
 
-    const pipeline = new CodePipeline(scope, 'LearnCDKPipeline', {
+    const pipeline = new CodePipeline(scope, 'LearnCdKPipeline', {
       synth,
+      pipelineName: 'LearnCdkPipeline',
     });
 
     const deployment = new DeployStage(scope, `DeployLearnCdk`, {});
