@@ -12,7 +12,7 @@ type LearnCdkPipelineProps = StackProps;
 export default class LearnCdkPipeline extends Stack {
   source: CodePipelineSource;
   synth: CodeBuildStep;
-  pipeline: CodePipeline;
+  cdkPipeline: CodePipeline;
 
   constructor(scope: Construct, id: string, props: LearnCdkPipelineProps) {
     super(scope, id, props);
@@ -49,14 +49,16 @@ export default class LearnCdkPipeline extends Stack {
   }
 
   createPipeline() {
-    this.pipeline = new CodePipeline(this, 'LearnCdkPipeline', {
+    this.cdkPipeline = new CodePipeline(this, 'LearnCdkPipeline', {
       synth: this.synth,
       pipelineName: 'LearnCdkPipeline',
     });
 
-    const deployment = new DeployStage(this, `DeployLearnCdk`, {});
-    this.pipeline.addStage(deployment);
+    // const deployment = new DeployStage(this, `DeployLearnCdk`, {});
+    // this.cdkPipeline.addStage(deployment);
 
-    this.pipeline.buildPipeline();
+    this.cdkPipeline.buildPipeline();
+
+    
   }
 }

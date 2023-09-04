@@ -1,9 +1,9 @@
-import * as cdk from 'aws-cdk-lib';
+import { CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
-export class LearnCdkStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+export class LearnCdkStack extends Stack {
+  constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
     // The code that defines your stack goes here
@@ -12,5 +12,6 @@ export class LearnCdkStack extends cdk.Stack {
     // const queue = new sqs.Queue(this, 'LearnCdkQueue', {
     //   visibilityTimeout: cdk.Duration.seconds(300)
     // });
+    new CfnOutput(this, 'ExportExample', { value: 'Test' });
   }
 }
