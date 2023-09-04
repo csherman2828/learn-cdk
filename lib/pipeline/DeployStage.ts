@@ -8,6 +8,6 @@ export default class DeployStage extends Stage {
   constructor(scope: Construct, id: string, props: LearnCdkStackProps) {
     super(scope, id, props);
 
-    const stack = new LearnCdkStack(this, 'LearnCdkStack', props);
+    new LearnCdkStack(this, 'LearnCdkStack', props);
   }
 }

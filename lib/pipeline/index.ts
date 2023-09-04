@@ -1,19 +1,62 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { CodePipeline } from 'aws-cdk-lib/pipelines';
-import createLearnCdkPipeline from './createLearnCdkPipeline';
+import { 
+  CodeBuildStep,
+  CodePipeline,
+  CodePipelineSource } from 'aws-cdk-lib/pipelines';
 
+import DeployStage from './DeployStage';
+
+type LearnCdkPipelineProps = StackProps;
 
 export default class LearnCdkPipeline extends Stack {
+  source: CodePipelineSource;
+  synth: CodeBuildStep;
   pipeline: CodePipeline;
 
-  constructor(scope: Construct, id: string, props: StackProps) {
+  constructor(scope: Construct, id: string, props: LearnCdkPipelineProps) {
     super(scope, id, props);
 
-    this.pipeline = createLearnCdkPipeline(
-      this,
-      'LearnCdkPipeline',
-      {}
+    this.acquireSource();
+    this.setUpCodeBuildScripts();
+    this.createPipeline();
+  }
+
+  acquireSource() {
+    const codestarConnectionsArn = 'arn:aws:codestar-connections:us-east-1:056680897227:connection/1092aa7c-8e87-4a40-8ee2-44083cf91cc9';
+
+    this.source = CodePipelineSource.connection(
+      'csherman2828/learn-cdk',
+      'master',
+      {
+        actionName: 'learn-cdk',
+        connectionArn: codestarConnectionsArn,
+      }
     );
+  }
+
+  setUpCodeBuildScripts() {
+    const buildCommands = [
+      'npm i',
+      'npm run test',
+      'npx cdk synth',
+    ];
+
+    const synth = new CodeBuildStep('Build', {
+      input: this.source,
+      commands: buildCommands,
+    });
+  }
+
+  createPipeline() {
+    this.pipeline = new CodePipeline(this, 'LearnCdKPipeline', {
+      synth: this.synth,
+      pipelineName: 'LearnCdkPipeline',
+    });
+
+    const deployment = new DeployStage(this, `DeployLearnCdk`, {});
+    this.pipeline.addStage(deployment);
+
+    this.pipeline.buildPipeline();
   }
 }
