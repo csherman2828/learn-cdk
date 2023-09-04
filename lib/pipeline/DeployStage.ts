@@ -4,7 +4,7 @@ import { LearnCdkStack } from '../learn-cdk-stack';
 
 type LearnCdkStackProps = StackProps;
 
-export class DeployStage extends Stage {
+export default class DeployStage extends Stage {
   constructor(scope: Construct, id: string, props: LearnCdkStackProps) {
     super(scope, id, props);
 
