@@ -42,14 +42,14 @@ export default class LearnCdkPipeline extends Stack {
       'npx cdk synth',
     ];
 
-    const synth = new CodeBuildStep('Build', {
+    this.synth = new CodeBuildStep('Build', {
       input: this.source,
       commands: buildCommands,
     });
   }
 
   createPipeline() {
-    this.pipeline = new CodePipeline(this, 'LearnCdKPipeline', {
+    this.pipeline = new CodePipeline(this, 'LearnCdkPipeline', {
       synth: this.synth,
       pipelineName: 'LearnCdkPipeline',
     });
