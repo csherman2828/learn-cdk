@@ -54,8 +54,11 @@ export default class LearnCdkPipeline extends Stack {
       pipelineName: 'LearnCdkPipeline',
     });
 
-    // const deployment = new DeployStage(this, `DeployLearnCdk`, {});
-    // this.cdkPipeline.addStage(deployment);
+    const deployment = new DeployStage(this, `DeployLearnCdk`, {});
+    this.cdkPipeline.addStage(deployment);
+
+    const deployment2 = new DeployStage(this, `DeployLearnCdk2`, {});
+    this.cdkPipeline.addStage(deployment);
 
     this.cdkPipeline.buildPipeline();
 
