@@ -10,7 +10,12 @@ export default class DeployStage extends Stage {
 
     new LearnCdkStack(this, 'LearnCdkStack', {
       ...props,
-      // stackName: 'LearnCdkStack',
+      stackName: 'LearnCdkStack',
+    });
+
+    new LearnCdkStack(this, 'LearnCdkStack2', {
+      ...props,
+      stackName: 'LearnCdkStack2',
     });
   }
 }
