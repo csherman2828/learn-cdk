@@ -5,4 +5,4 @@ import * as cdk from 'aws-cdk-lib';
 import LearnCdkPipeline from '../lib/pipeline';
 
 const app = new cdk.App();
-new LearnCdkPipeline(app, 'LearnCdkStack', {});
+new LearnCdkPipeline(app, 'LearnCdkPipeline', {});

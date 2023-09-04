@@ -18,6 +18,7 @@ export default function createLearnCdkPipeline(scope: Construct, id: string, pro
       'csherman2828/learn-cdk',
       'master',
       {
+        actionName: 'learn-cdk',
         connectionArn: codestarConnectionsArn,
       }
     );
