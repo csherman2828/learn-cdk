@@ -1,9 +1,10 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { 
+import {
   CodeBuildStep,
   CodePipeline,
-  CodePipelineSource } from 'aws-cdk-lib/pipelines';
+  CodePipelineSource,
+} from 'aws-cdk-lib/pipelines';
 
 import DeployStage from './DeployStage';
 
@@ -23,7 +24,8 @@ export default class LearnCdkPipeline extends Stack {
   }
 
   acquireSource() {
-    const codestarConnectionsArn = 'arn:aws:codestar-connections:us-east-1:056680897227:connection/1092aa7c-8e87-4a40-8ee2-44083cf91cc9';
+    const codestarConnectionsArn =
+      'arn:aws:codestar-connections:us-east-1:056680897227:connection/1092aa7c-8e87-4a40-8ee2-44083cf91cc9';
 
     this.source = CodePipelineSource.connection(
       'csherman2828/learn-cdk',
@@ -31,16 +33,12 @@ export default class LearnCdkPipeline extends Stack {
       {
         actionName: 'learn-cdk',
         connectionArn: codestarConnectionsArn,
-      }
+      },
     );
   }
 
   setUpCodeBuildScripts() {
-    const buildCommands = [
-      'npm i',
-      'npm run test',
-      'npx cdk synth',
-    ];
+    const buildCommands = ['npm i', 'npm run test', 'npx cdk synth'];
 
     this.synth = new CodeBuildStep('Build', {
       input: this.source,
@@ -58,7 +56,5 @@ export default class LearnCdkPipeline extends Stack {
     this.cdkPipeline.addStage(deployment);
 
     this.cdkPipeline.buildPipeline();
-
-    
   }
 }
